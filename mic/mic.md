@@ -2,11 +2,13 @@
 
 ## INMP441 Micro Electro Mechanical System High Precision Omnidirectional Microphone Module (I2S)
 
-The **INMP441** is a high-performance, low-power, digital-output, omnidirectional MEMS microphone with a bottom port.  
-The complete INMP441 solution consists of a MEMS sensor, signal conditioning, analog-to-digital converter, anti-aliasing filter, power management, and an industry-standard **24-bit I2S interface**.
+- The **INMP441** is a high-performance, low-power, digital-output, omnidirectional MEMS microphone with a bottom port.  
 
-The I2S interface allows the INMP441 to be directly connected to digital processors such as DSPs and microcontrollers without the need for an external audio codec.  
-The INMP441 has a high signal-to-noise ratio and is an excellent choice for near-field applications. It features a flat wideband frequency response, resulting in high-definition natural sound.
+- The complete INMP441 solution consists of a MEMS sensor, signal conditioning, analog-to-digital converter, anti-aliasing filter, power management, and an industry-standard **24-bit I2S interface**.
+
+- The I2S interface allows the INMP441 to be directly connected to digital processors such as DSPs and microcontrollers without the need for an external audio codec.  
+
+- The INMP441 has a high signal-to-noise ratio and is an excellent choice for near-field applications. It features a flat wideband frequency response, resulting in high-definition natural sound.
 
 ## Interface Definition
 
@@ -21,12 +23,25 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 
 ## INMP441 Connection with ESP32
 
-1. **SCK** → GPIO14  
-2. **SD** → GPIO32  
-3. **WS** → GPIO15  
-4. **L/R** → GND  
-5. **GND** → GND  
-6. **VDD** → VDD3.3  
+| INMP441 Pin | ESP32 Pin |
+|------------|-----------|
+| SCK        | GPIO14    |
+| SD         | GPIO32    |
+| WS         | GPIO15    |
+| L/R        | GND       |
+| GND        | GND       |
+| VDD        | VDD3.3    |
+
+## INMP441 Connection with Raspberry Pi 4
+
+| INMP441 Pin | Raspberry Pi 4 Pin | GPIO |
+|------------|-------------------|------|
+| **SCK**    | Pin 12            | GPIO18 (PCM_CLK) |
+| **WS**     | Pin 35            | GPIO19 (PCM_FS)  |
+| **SD**     | Pin 38            | GPIO20 (PCM_DIN) |
+| **L/R**    | GND               | — (Left Channel) |
+| **VDD**    | Pin 1 or 17       | 3.3V |
+| **GND**    | Pin 6             | GND |
 
 ## Features
 
@@ -35,11 +50,7 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 - High sensitivity: **−26 dBFS**  
 - Stable frequency response from **60 Hz to 15 kHz**  
 - Low power consumption: **1.4 mA**  
-- High PSR: **−75 dBFS**  
-
-## Package Included
-
-- **1 × INMP441 MEMS High Precision Omnidirectional Microphone Module (I2S)**
+- High PSR: **−75 dBFS** 
 
 ## Product Specifications
 
@@ -52,3 +63,8 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 | High PSR                     | −75 dBFS         |
 | Shipping Weight              | 0.02 kg          |
 | Shipping Dimensions          | 6 × 5 × 3 cm     |
+
+
+
+
+
