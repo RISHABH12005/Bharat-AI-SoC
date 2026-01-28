@@ -48,11 +48,7 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 - High sensitivity: **−26 dBFS**  
 - Stable frequency response from **60 Hz to 15 kHz**  
 - Low power consumption: **1.4 mA**  
-- High PSR: **−75 dBFS**  
-
-## Package Included
-
-- **1 × INMP441 MEMS High Precision Omnidirectional Microphone Module (I2S)**
+- High PSR: **−75 dBFS** 
 
 ## Product Specifications
 
@@ -65,5 +61,6 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 | High PSR                     | −75 dBFS         |
 | Shipping Weight              | 0.02 kg          |
 | Shipping Dimensions          | 6 × 5 × 3 cm     |
+
 
 
