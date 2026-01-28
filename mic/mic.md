@@ -21,12 +21,14 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 
 ## INMP441 Connection with ESP32
 
-1. **SCK** → GPIO14  
-2. **SD** → GPIO32  
-3. **WS** → GPIO15  
-4. **L/R** → GND  
-5. **GND** → GND  
-6. **VDD** → VDD3.3
+| INMP441 Pin | ESP32 Pin |
+|------------|-----------|
+| SCK        | GPIO14    |
+| SD         | GPIO32    |
+| WS         | GPIO15    |
+| L/R        | GND       |
+| GND        | GND       |
+| VDD        | VDD3.3    |
 
 ## INMP441 Connection with Raspberry Pi 4
 
@@ -63,4 +65,5 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 | High PSR                     | −75 dBFS         |
 | Shipping Weight              | 0.02 kg          |
 | Shipping Dimensions          | 6 × 5 × 3 cm     |
+
 
