@@ -26,7 +26,18 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 3. **WS** → GPIO15  
 4. **L/R** → GND  
 5. **GND** → GND  
-6. **VDD** → VDD3.3  
+6. **VDD** → VDD3.3
+
+## INMP441 Connection with Raspberry Pi 4
+
+| INMP441 Pin | Raspberry Pi 4 Pin | GPIO |
+|------------|-------------------|------|
+| **SCK**    | Pin 12            | GPIO18 (PCM_CLK) |
+| **WS**     | Pin 35            | GPIO19 (PCM_FS)  |
+| **SD**     | Pin 38            | GPIO20 (PCM_DIN) |
+| **L/R**    | GND               | — (Left Channel) |
+| **VDD**    | Pin 1 or 17       | 3.3V |
+| **GND**    | Pin 6             | GND |
 
 ## Features
 
@@ -52,3 +63,4 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 | High PSR                     | −75 dBFS         |
 | Shipping Weight              | 0.02 kg          |
 | Shipping Dimensions          | 6 × 5 × 3 cm     |
+
