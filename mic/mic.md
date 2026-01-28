@@ -2,13 +2,13 @@
 
 ## INMP441 Micro Electro Mechanical System High Precision Omnidirectional Microphone Module (I2S)
 
-The **INMP441** is a high-performance, low-power, digital-output, omnidirectional MEMS microphone with a bottom port.  
+- The **INMP441** is a high-performance, low-power, digital-output, omnidirectional MEMS microphone with a bottom port.  
 
-The complete INMP441 solution consists of a MEMS sensor, signal conditioning, analog-to-digital converter, anti-aliasing filter, power management, and an industry-standard **24-bit I2S interface**.
+- The complete INMP441 solution consists of a MEMS sensor, signal conditioning, analog-to-digital converter, anti-aliasing filter, power management, and an industry-standard **24-bit I2S interface**.
 
-The I2S interface allows the INMP441 to be directly connected to digital processors such as DSPs and microcontrollers without the need for an external audio codec.  
+- The I2S interface allows the INMP441 to be directly connected to digital processors such as DSPs and microcontrollers without the need for an external audio codec.  
 
-The INMP441 has a high signal-to-noise ratio and is an excellent choice for near-field applications. It features a flat wideband frequency response, resulting in high-definition natural sound.
+- The INMP441 has a high signal-to-noise ratio and is an excellent choice for near-field applications. It features a flat wideband frequency response, resulting in high-definition natural sound.
 
 ## Interface Definition
 
@@ -63,6 +63,7 @@ The INMP441 has a high signal-to-noise ratio and is an excellent choice for near
 | High PSR                     | −75 dBFS         |
 | Shipping Weight              | 0.02 kg          |
 | Shipping Dimensions          | 6 × 5 × 3 cm     |
+
 
 
 
