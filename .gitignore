@@ -1,0 +1,19 @@
+# Python virtual environment
+/venv/
+/.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+
+# Audio temp files
+*.wav
+*.mp3
+*.flac
+
+# Logs
+*.log
