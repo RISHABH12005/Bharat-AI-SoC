@@ -46,5 +46,5 @@ def record_audio(duration=2.0):
         return record_inmp441(duration_sec=duration)
 
     # VM-safe fallback
-    print("[Audio] No microphone available (VM environment)")
+    print("[Audio] No microphone available (VM or WSL environment)")
     return None
