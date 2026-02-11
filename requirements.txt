@@ -2,5 +2,5 @@ numpy
 scipy
 soundfile
 pyaudio
-librosa
+Vosk
 webrtcvad

@@ -1,10 +1,12 @@
 import pyaudio
 import numpy as np
+from config.settings import (
+    SAMPLE_RATE,
+    CHANNELS,
+    CHUNK,
+    FORMAT
+)
 
-SAMPLE_RATE = 16000
-CHANNELS = 1
-CHUNK = 1024
-FORMAT = pyaudio.paInt16
 
 
 def record_usb(duration_sec=2.0, device_index=None):
