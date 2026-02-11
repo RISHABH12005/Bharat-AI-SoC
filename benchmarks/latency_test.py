@@ -3,9 +3,7 @@ import os
 import psutil
 from datetime import datetime
 
-import soundfile as sf
-
-from asr.hindi_asr import transcribe_wav
+from asr.hindi_asr import transcribe_audio, transcribe_wav
 from nlp.intent_parser import detect_intent
 from tts.responses import RESPONSES
 from tts.hindi_tts import speak
@@ -14,9 +12,7 @@ from audio.audio_io import record_audio
 from config.settings import (
     USE_MIC,
     MIC_DURATION,
-    SAMPLE_RATE,
     TEST_WAV,
-    TMP_DIR,
     RESULTS_DIR
 )
 
@@ -40,44 +36,82 @@ def log_to_file(lines):
 
 def main():
     output = []
-    output.append("=== Latency Benchmark ===")
-    output.append("Audio format: 16kHz mono WAV")
+    output.append("=== Latency Benchmark (In-Memory Optimized) ===")
+    output.append("Audio format: 16kHz mono int16")
     output.append(f"Mode: {'MIC' if USE_MIC else 'FILE'}")
 
     process = psutil.Process(os.getpid())
-    process.cpu_percent(interval=None)  # init CPU measurement
+    process.cpu_percent(interval=None)
 
-    ensure_dir(TMP_DIR)
-
-    t0 = now()
+    # ===============================
+    # RECORDING
+    # ===============================
+    record_start = now()
 
     if USE_MIC:
-        audio, sr = record_audio(MIC_DURATION)
-        mic_wav = f"{TMP_DIR}/mic.wav"
-        sf.write(mic_wav, audio, sr)
-        text = transcribe_wav(mic_wav)
+        audio = record_audio(MIC_DURATION)
+        if audio is None:
+            print("No audio device available.")
+            return
+        record_end = now()
+    else:
+        record_end = now()
+
+    # ===============================
+    # ASR (Compute Only)
+    # ===============================
+    asr_start = now()
+
+    if USE_MIC:
+        text = transcribe_audio(audio)
     else:
         text = transcribe_wav(TEST_WAV)
 
-    t1 = now()
+    asr_end = now()
 
+    # ===============================
+    # INTENT
+    # ===============================
+    intent_start = now()
     intent = detect_intent(text)
-    t2 = now()
+    intent_end = now()
 
+    # ===============================
+    # TTS
+    # ===============================
+    tts_start = now()
     response = RESPONSES.get(intent, RESPONSES["UNKNOWN"])
     speak(response)
-    t3 = now()
+    tts_end = now()
 
+    # ===============================
+    # SYSTEM STATS
+    # ===============================
     cpu = process.cpu_percent(interval=None)
     mem = process.memory_info().rss / (1024 * 1024)
 
+    # ===============================
+    # METRICS
+    # ===============================
+    recording_latency = (record_end - record_start) * 1000
+    asr_latency = (asr_end - asr_start) * 1000
+    intent_latency = (intent_end - intent_start) * 1000
+    tts_latency = (tts_end - tts_start) * 1000
+    e2e_no_record = (tts_end - asr_start) * 1000
+    total_latency = (tts_end - record_start) * 1000
+
     output.extend([
-        f"CPU usage         : {cpu:.1f} %",
-        f"Memory usage      : {mem:.1f} MB",
-        f"ASR latency       : {(t1 - t0) * 1000:.1f} ms",
-        f"Intent latency    : {(t2 - t1) * 1000:.2f} ms",
-        f"TTS latency       : {(t3 - t2) * 1000:.1f} ms",
-        f"End-to-End latency: {(t3 - t0) * 1000:.1f} ms",
+        "",
+        f"CPU usage              : {cpu:.1f} %",
+        f"Memory usage           : {mem:.1f} MB",
+        "",
+        f"Recording latency      : {recording_latency:.1f} ms",
+        f"ASR compute latency    : {asr_latency:.1f} ms",
+        f"Intent latency         : {intent_latency:.2f} ms",
+        f"TTS latency            : {tts_latency:.1f} ms",
+        "",
+        f"End-to-End (no record) : {e2e_no_record:.1f} ms",
+        f"Total latency          : {total_latency:.1f} ms",
         "",
         f"ASR Output : {text}",
         f"Intent     : {intent}"

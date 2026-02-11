@@ -38,13 +38,15 @@ def record_audio(duration=2.0):
     # Priority 1: USB mic (works on VM + Pi)
     if usb_index is not None:
         print("[Audio] Using USB microphone")
-        return record_usb(duration_sec=duration, device_index=usb_index)
+        return record_usb(device_index=usb_index)
 
     # Priority 2: INMP441 (ONLY on real Pi)
     if is_real_pi():
         print("[Audio] USB mic not found, using INMP441 (I2S)")
-        return record_inmp441(duration_sec=duration)
+        return record_inmp441()
 
     # VM-safe fallback
     print("[Audio] No microphone available (VM or WSL environment)")
     return None
+
+

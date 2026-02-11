@@ -1,7 +1,7 @@
 import logging
 from config.settings import RECORD_SECONDS, LOG_PATH
 from audio.audio_io import record_audio
-from asr.hindi_asr import transcribe_wav
+from asr.hindi_asr import transcribe_wav, transcribe_audio
 from nlp.intent_parser import detect_intent
 from tts.responses import RESPONSES
 from tts.hindi_tts import speak
@@ -16,9 +16,9 @@ logging.basicConfig(
 
 def run_once():
     try:
-        wav_path = record_audio(RECORD_SECONDS)
+        audio = record_audio(RECORD_SECONDS)
 
-        text = transcribe_wav(wav_path)
+        text = transcribe_audio(audio)
         logging.info(f"ASR: {text}")
 
         intent = detect_intent(text)

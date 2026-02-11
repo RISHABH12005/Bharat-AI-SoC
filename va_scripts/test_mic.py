@@ -1,7 +1,7 @@
 import soundfile as sf
 from audio.audio_io import record_audio
 
-audio = record_audio(2.0)
+audio = record_audio(5.0)
 
 if audio is None:
     print("[Test] No live mic in this environment. Test skipped.")

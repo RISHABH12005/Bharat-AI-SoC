@@ -1,11 +1,12 @@
 import json
 import wave
 from vosk import Model, KaldiRecognizer
+from config.settings import CHUNK
 import os
 
 MODEL_PATH = os.path.join(
     os.path.dirname(__file__),
-    "models",
+    "model",
     "vosk-model-small-hi-0.22"
 )
 
@@ -21,13 +22,16 @@ def load_model():
     return _model
 
 
+model = load_model()
+
+
 def transcribe_wav(wav_path):
     wf = wave.open(wav_path, "rb")
 
     if wf.getnchannels() != 1 or wf.getframerate() != 16000:
         raise ValueError("Audio must be mono 16kHz WAV")
 
-    model = load_model()
+    
     rec = KaldiRecognizer(model, 16000)
     rec.SetWords(True)
 
@@ -39,3 +43,20 @@ def transcribe_wav(wav_path):
 
     result = json.loads(rec.FinalResult())
     return result.get("text", "")
+
+
+def transcribe_audio(audio_np):
+    rec = KaldiRecognizer(model, 16000)
+    rec.SetWords(True)
+
+    chunk_samples = CHUNK
+    total_samples = len(audio_np)
+
+    for i in range(0, total_samples, chunk_samples):
+        chunk = audio_np[i:i + chunk_samples]
+        rec.AcceptWaveform(chunk.tobytes())
+
+    result = json.loads(rec.FinalResult())
+    return result.get("text", "")
+
+

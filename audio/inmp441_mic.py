@@ -1,22 +1,55 @@
 import subprocess
 import numpy as np
-import tempfile
-import soundfile as sf
+from config.settings import SAMPLE_RATE, CHUNK, SILENCE_THRESHOLD, SILENCE_CHUNK
 
 
-def record_inmp441(duration_sec=2.0, device="hw:1,0"):
-    with tempfile.NamedTemporaryFile(suffix=".wav") as tmp:
-        cmd = [
-            "arecord",
-            "-D", device,
-            "-f", "S16_LE",
-            "-r", "16000",
-            "-c", "1",
-            "-d", str(int(duration_sec)),
-            tmp.name
-        ]
+def record_inmp441(device="mic"):
+    print("[Audio] Using INMP441 (Streaming Mode via arecord)")
 
-        subprocess.run(cmd, check=True)
+    cmd = [
+        "arecord",
+        "-D", device,
+        "-f", "S16_LE",
+        "-r", str(SAMPLE_RATE),
+        "-c", "1",
+        "-t", "raw"  
+    ]
 
-        audio, _ = sf.read(tmp.name, dtype="int16")
-        return audio
+    process = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL
+    )
+
+    silence_chunks = 0
+    audio_buffer = []
+
+    try:
+        while True:
+            data = process.stdout.read(CHUNK * 2)  # 2 bytes per int16
+
+            if not data:
+                break
+
+            audio_np = np.frombuffer(data, dtype=np.int16)
+            audio_buffer.append(audio_np)
+
+            amplitude = np.abs(audio_np).mean()
+
+            if amplitude < SILENCE_THRESHOLD:
+                silence_chunks += 1
+            else:
+                silence_chunks = 0
+
+            if silence_chunks > SILENCE_CHUNK:
+                break
+
+    finally:
+        process.terminate()
+        process.wait()
+
+    if len(audio_buffer) == 0:
+        return None
+
+    audio = np.concatenate(audio_buffer)
+    return audio

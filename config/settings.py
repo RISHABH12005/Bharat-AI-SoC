@@ -1,9 +1,14 @@
+import pyaudio
+
 SAMPLE_RATE = 16000
 CHANNELS = 1
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 
 RECORD_SECONDS = 2.0
+SILENCE_THRESHOLD = 500
+SILENCE_DURATION = 0.8 
+SILENCE_CHUNK = 15
 
 WAKE_REQUIRED = False     
 LOG_PATH = "logs/assistant.log"
