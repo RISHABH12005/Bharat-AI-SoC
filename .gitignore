@@ -17,3 +17,10 @@ __pycache__/
 
 # Logs
 *.log
+
+#model
+vosk-model-small-hi-0.22/
+*.zip
+
+tmp
+results
